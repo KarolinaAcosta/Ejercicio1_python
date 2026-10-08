@@ -1,0 +1,35 @@
+REPORTE DE EJECUCIONES
+======================
+
+BOT: bot_facturas
+Total de ejecuciones: 6
+Ejecuciones exitosas: 2
+Ejecuciones fallidas: 4
+Porcentaje de éxito: 33.33%
+Duración promedio: 75.17
+Duración máxima: 145
+Duración mínima: 36
+
+BOT: bot_cartera
+Total de ejecuciones: 7
+Ejecuciones exitosas: 6
+Ejecuciones fallidas: 1
+Porcentaje de éxito: 85.71%
+Duración promedio: 66.57
+Duración máxima: 120
+Duración mínima: 15
+
+BOT: bot_nomina
+Total de ejecuciones: 3
+Ejecuciones exitosas: 2
+Ejecuciones fallidas: 1
+Porcentaje de éxito: 66.67%
+Duración promedio: 79.67
+Duración máxima: 98
+Duración mínima: 56
+
+COMPARACIÓN
+===========
+
+Bot con menor porcentaje de éxito: bot_facturas
+Bot con mayor duración promedio: bot_nomina
