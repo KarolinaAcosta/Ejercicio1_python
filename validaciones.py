@@ -1,35 +1,34 @@
 from datetime import datetime
 
 
-def check_fields(linea, numero_linea):
-    fields = linea.split(",")   #splitdivide un texto usando la coma (,) como separador.
+def check_fields(linea, numero_linea=None):
+    fields = linea.strip().split(",")
 
-    if len(fields) != 4: #si la cantidad de fields es diferente de 4
-        if linea == "":
-            print("La línea", numero_linea, "está vacía y no cumple con los 4 campos.")
-        else: 
-            print("La línea", numero_linea, "no cumple: debe tener exactamente 4 campos:", linea)
-        return
+    def invalid(message):
+        if numero_linea is not None:
+            print(f"La línea {numero_linea} no cumple: {message}: {linea.strip()}")
+        return False, None
 
-    fecha, bot, ejecucion, tiempo = fields #como la cantidad de fields es 4, se asignan a las variables corespondientes
+    if len(fields) != 4:
+        return invalid("debe tener exactamente 4 campos")
+
+    fecha, bot, ejecucion, tiempo = fields
 
     try:
         datetime.strptime(fecha, "%Y-%m-%d")
     except ValueError:
-        print("La línea", numero_linea, "no cumple: la fecha debe tener formato año-mes-día:", linea)
-        return
+        return invalid("la fecha debe tener el formato AAAA-MM-DD")
 
     if (bot != "bot_facturas" and bot != "bot_nomina"
             and bot != "bot_cartera"):
-        print("La línea", numero_linea, "no cumple: el bot no es válido:", linea)
-        return
+        return invalid("el bot debe ser bot_facturas, bot_nomina o bot_cartera")
 
     if ejecucion != "exitosa" and ejecucion != "fallida":
-        print("La línea", numero_linea, "no cumple: la ejecución debe ser exitosa o fallida:", linea)
-        return
+        return invalid("la ejecución debe ser exitosa o fallida")
 
     if not tiempo.isdigit():
-        print("La línea", numero_linea, "no cumple: el tiempo debe ser un número entero:", linea)
-        return
+        return invalid("el tiempo debe ser un número entero")
 
-    print("La línea", numero_linea, "cumple con los 4 datos:", linea)
+    if numero_linea is not None:
+        print(f"La línea {numero_linea} cumple con los 4 campos: {linea.strip()}")
+    return True, (fecha, bot, ejecucion, tiempo)
