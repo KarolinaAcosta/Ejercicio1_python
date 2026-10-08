@@ -6,12 +6,29 @@ def process_file(file_name):
     failed = []
     invalid = []
 
-    with open(file_name, "r", encoding="utf-8") as file: # encoding outf-8  para aceptar caracteres especiales
-        for number_lines, line in enumerate(file, start=1): 
-            valid, result = check_fields(line, number_lines) # validación de los campos de cada línea del archivo
+#Diccionarios para contar las lineas invalidas segun motivo
 
-            if not valid: 
-                invalid.append(line.strip())
+    invalid_reasons = {
+        "linea vacia": 0,
+        "Debe tener exactamente 4 campos": 0,
+        "la fecha debe tener el formato AAAA-MM-DD": 0,
+        "bot debe ser bot_facturas, bot_nomina o bot_cartera": 0,
+        "ejecucion debe ser exitosa o fallida": 0,
+        "tiempo debe ser un número entero": 0
+    }
+
+    try:
+
+        with open(file_name, "r", encoding="utf-8") as file: # encoding outf-8  para aceptar caracteres especiales
+            for number_lines, line in enumerate(file, start=1): 
+                valid, result, reason = check_fields(line, number_lines) # validación de los campos de cada línea del archivo
+
+                if not valid: 
+                    invalid.append(line.strip())
+
+                if reason in invalid_reasons:
+                    invalid_reasons[reason] += 1
+
                 continue
 
             date, bot, execution, time = result # datos validados de la línea
@@ -23,4 +40,8 @@ def process_file(file_name):
             else:
                 failed.append(execution_data) # agrega la ejecución fallida a la lista de ejecuciones fallidas
 
-    return successful, failed, invalid # retorna las ejecuciones exitosas, fallidas e inválidas como listas de tuplas
+    except FileNotFoundError:
+        print(f"El archivo {file_name} no se encontró.")
+    return successful, failed, invalid, invalid_reasons # retorna las ejecuciones exitosas, fallidas e inválidas como listas de tuplas
+
+    

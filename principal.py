@@ -6,11 +6,6 @@ from indicadores import calculate_indicators
 from comparacion import compare_bots
 from reporte import create_report
 
-
-# Validamos las líneas del archivo y procesamos las ejecuciones exitosas, fallidas e inválidas
-validated_lines = read_lines()
-
-
 # Procesamos las ejecuciones exitosas, fallidas e inválidas
 successful, failed, invalid = process_file("ejecuciones.txt")
 
@@ -20,7 +15,7 @@ bots = calculate_indicators(successful, failed)
 # Comparamos los bots y obtenemos el bot con menor porcentaje de éxito y el bot con mayor duración promedio
 lowest_bot, highest_bot = compare_bots(bots)
 
-#crea,os el reporte con los indicadores de cada bot
+#creaaos el reporte con los indicadores de cada bot
 create_report(bots, lowest_bot, highest_bot)
 
 print("Reporte creado correctamente.")

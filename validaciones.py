@@ -8,7 +8,7 @@ def check_fields(linea, numero_linea=None):
     def invalid(message): 
         if numero_linea is not None: # si se proporciona el número de línea
             print(f"La línea {numero_linea} no cumple: {message}: {linea.strip()}")  # imprime el mensaje de error con el número de línea y la línea completa
-        return False, None # retorna False y None para indicar que la línea no es válida
+        return False, None, message# retorna False y None para indicar que la línea no es válida
 
     if len(fields) != 4: # si la línea no tiene exactamente 4 campos, retorna un mensaje de error
         return invalid("debe tener exactamente 4 campos")
