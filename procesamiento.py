@@ -42,6 +42,6 @@ def process_file(file_name):
 
     except FileNotFoundError:
         print(f"El archivo {file_name} no se encontró.")
-    return successful, failed, invalid, invalid_reasons # retorna las ejecuciones exitosas, fallidas e inválidas como listas de tuplas
+    return successful, failed, invalid, invalid_reasons # retorna las ejecuciones exitosas, fallidas e inválidas
 
     
