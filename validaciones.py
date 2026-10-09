@@ -10,6 +10,9 @@ def check_fields(linea, numero_linea=None):
             print(f"La línea {numero_linea} no cumple: {message}: {linea.strip()}")  # imprime el mensaje de error con el número de línea y la línea completa
         return False, None, message# retorna False y None para indicar que la línea no es válida
 
+    if not linea.strip():
+        return invalid("linea vacia")
+
     if len(fields) != 4: # si la línea no tiene exactamente 4 campos, retorna un mensaje de error
         return invalid("debe tener exactamente 4 campos")
 
@@ -38,4 +41,4 @@ def check_fields(linea, numero_linea=None):
 #validación exitosa, retorna True y los campos validados
     if numero_linea is not None:
         print(f"La línea {numero_linea} cumple con los 4 campos: {linea.strip()}")
-    return True, (fecha, bot, ejecucion, tiempo)
+    return True, (fecha, bot, ejecucion, tiempo), None

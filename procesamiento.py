@@ -10,11 +10,11 @@ def process_file(file_name):
 
     invalid_reasons = {
         "linea vacia": 0,
-        "Debe tener exactamente 4 campos": 0,
+        "debe tener exactamente 4 campos": 0,
         "la fecha debe tener el formato AAAA-MM-DD": 0,
-        "bot debe ser bot_facturas, bot_nomina o bot_cartera": 0,
-        "ejecucion debe ser exitosa o fallida": 0,
-        "tiempo debe ser un número entero": 0
+        "el bot debe ser bot_facturas, bot_nomina o bot_cartera": 0,
+        "la ejecución debe ser exitosa o fallida": 0,
+        "el tiempo debe ser un número entero": 0
     }
 
     try:
@@ -23,25 +23,23 @@ def process_file(file_name):
             for number_lines, line in enumerate(file, start=1): 
                 valid, result, reason = check_fields(line, number_lines) # validación de los campos de cada línea del archivo
 
-                if not valid: 
+                if not valid:
                     invalid.append(line.strip())
+                    if reason in invalid_reasons:
+                        invalid_reasons[reason] += 1
+                    continue
 
-                if reason in invalid_reasons:
-                    invalid_reasons[reason] += 1
+                date, bot, execution, time = result # datos validados de la línea
+                time = int(time) # Pide el tiempo de ejecución como un entero
+                execution_data = (date, bot, execution, time) # execution_data es una tupla que contiene los datos de la ejecución
 
-                continue
-
-            date, bot, execution, time = result # datos validados de la línea
-            time = int(time) # Pide el tiempo de ejecución como un entero
-            execution_data = (date, bot, execution, time) # execution_data es una tupla que contiene los datos de la ejecución
-
-            if execution == "exitosa":
-                successful.append(execution_data) # agrega la ejecución exitosa a la lista de ejecuciones exitosas
-            else:
-                failed.append(execution_data) # agrega la ejecución fallida a la lista de ejecuciones fallidas
+                if execution == "exitosa":
+                    successful.append(execution_data) # agrega la ejecución exitosa a la lista de ejecuciones exitosas
+                else:
+                    failed.append(execution_data) # agrega la ejecución fallida a la lista de ejecuciones fallidas
 
     except FileNotFoundError:
         print(f"El archivo {file_name} no se encontró.")
-    return successful, failed, invalid, invalid_reasons # retorna las ejecuciones exitosas, fallidas e inválidas
+    return successful, failed, invalid, invalid_reasons # retorna las ejecuciones exitosas, fallidas e inválidas como listas de tuplas
 
     

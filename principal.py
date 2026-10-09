@@ -5,9 +5,10 @@ from procesamiento import process_file
 from indicadores import calculate_indicators
 from comparacion import compare_bots
 from reporte import create_report
+from procesamiento import process_file
 
 # Procesamos las ejecuciones exitosas, fallidas e inválidas
-successful, failed, invalid = process_file("ejecuciones.txt")
+successful, failed, invalid, invalid_reasons = process_file("ejecuciones.txt")
 
 # Calculamos los indicadores de cada bot
 bots = calculate_indicators(successful, failed)
@@ -19,4 +20,3 @@ lowest_bot, highest_bot = compare_bots(bots)
 create_report(bots, lowest_bot, highest_bot)
 
 print("Reporte creado correctamente.")
-
